@@ -73,16 +73,16 @@ class SubRectangle:
 
 
 
-def DivideRectangle(parent):
+def DivideRectangle(array_of_cuadros, parent):
     """Toma los siguientes tres dígitos de Pi, y divide el cuadro en dos usando como proporción el primero de esos tres dígitos. Los otros dos digitos asignan el color de los cuadros """
-    global PI, ArrayCuadros
+    global PI
  
     division= int(PI.pop(0))
     color1= int(PI.pop(0))
     color2= int(PI.pop(0))
 
-    ArrayCuadros.append(SubRectangle(1,division,color1,parent))
-    ArrayCuadros.append(SubRectangle(2,division,color2,parent))
+    array_of_cuadros.append(SubRectangle(1,division,color1,parent))
+    array_of_cuadros.append(SubRectangle(2,division,color2,parent))
 
 
 def Division(corta,larga,division):
@@ -98,15 +98,15 @@ def Division(corta,larga,division):
     return resultado
 
 
-def PintaCuadro(generation,name):
+def PintaCuadro(array_of_cuadros, generation,name):
 
-    global WIDTH, HEIGHT, LINE, ArrayCuadros
+    global WIDTH, HEIGHT, LINE
 
     img = Image.new("RGB", (WIDTH, HEIGHT), "#000000")
 
     draw = ImageDraw.Draw(img)
 
-    for elemento in ArrayCuadros:
+    for elemento in array_of_cuadros:
 
         if elemento.Color == 0:
             FillColor= "#FFFFFF"
@@ -139,19 +139,22 @@ def PintaCuadro(generation,name):
 
 def Inspiration(Iterations):
 
-    global ArrayCuadros
 
-    ArrayCuadros= []
+    array_of_cuadros = []
     # Creamos el rectángulo raiz
-    ArrayCuadros.append(SubRectangle(1,0,0))
+    array_of_cuadros.append(SubRectangle(1,0,0))
 
     # Creamos el resto de rectángulos
     i = 0
     while i < Iterations:
-        for elemento in ArrayCuadros:
+        for elemento in array_of_cuadros:
             if elemento.Generation == i:
-                DivideRectangle(elemento)
+                DivideRectangle(array_of_cuadros, elemento)
         i = i + 1
+
+    return array_of_cuadros
+
+
 
 ## Programa principal
 
@@ -176,10 +179,10 @@ Fichero.close()
 
 PI = list(Cadena)
 
-ArrayCuadros= []
 
-Inspiration(iterations)
-PintaCuadro(iterations,TableauName)
+
+array_of_cuadros = Inspiration(iterations)
+PintaCuadro(array_of_cuadros,iterations,TableauName)
 
 
 
