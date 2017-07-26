@@ -73,13 +73,12 @@ class SubRectangle:
 
 
 
-def DivideRectangle(array_of_cuadros, parent):
+def DivideRectangle(sequence, array_of_cuadros, parent):
     """Toma los siguientes tres dígitos de Pi, y divide el cuadro en dos usando como proporción el primero de esos tres dígitos. Los otros dos digitos asignan el color de los cuadros """
-    global PI
  
-    division= int(PI.pop(0))
-    color1= int(PI.pop(0))
-    color2= int(PI.pop(0))
+    division= int(sequence.pop(0))
+    color1= int(sequence.pop(0))
+    color2= int(sequence.pop(0))
 
     array_of_cuadros.append(SubRectangle(1,division,color1,parent))
     array_of_cuadros.append(SubRectangle(2,division,color2,parent))
@@ -137,7 +136,7 @@ def PintaCuadro(array_of_cuadros, generation,name):
     img.save(name, "PNG")
 
 
-def Inspiration(Iterations):
+def Inspiration(sequence, Iterations):
 
 
     array_of_cuadros = []
@@ -149,7 +148,7 @@ def Inspiration(Iterations):
     while i < Iterations:
         for elemento in array_of_cuadros:
             if elemento.Generation == i:
-                DivideRectangle(array_of_cuadros, elemento)
+                DivideRectangle(sequence, array_of_cuadros, elemento)
         i = i + 1
 
     return array_of_cuadros
@@ -179,9 +178,7 @@ Fichero.close()
 
 PI = list(Cadena)
 
-
-
-array_of_cuadros = Inspiration(iterations)
+array_of_cuadros = Inspiration(PI, iterations)
 PintaCuadro(array_of_cuadros,iterations,TableauName)
 
 
