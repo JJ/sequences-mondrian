@@ -74,10 +74,11 @@ class SubRectangle:
 
 def DivideRectangle(sequence, array_of_cuadros, parent, width, height):
     """Toma los siguientes tres dígitos de Pi, y divide el cuadro en dos usando como proporción el primero de esos tres dígitos. Los otros dos digitos asignan el color de los cuadros """
- 
-    division= int(sequence.pop(0))
-    color1= int(sequence.pop(0))
-    color2= int(sequence.pop(0))
+
+    print( "Tamaño ", len(sequence), "\n")
+    division= int(sequence.pop(0)) % 10
+    color1= int(sequence.pop(0)) % 10
+    color2= int(sequence.pop(0)) % 10 
 
     array_of_cuadros.append(SubRectangle(1,division,color1, width, height, parent))
     array_of_cuadros.append(SubRectangle(2,division,color2, width, height, parent))
@@ -108,11 +109,11 @@ def PintaCuadro(array_of_cuadros, generation, name, width,height,line_width):
     linea = round(line_width/2.0)
     draw = ImageDraw.Draw(img)    
     for elemento in array_of_cuadros:
-
-        FillColor= colores[elemento.Color][0]
+        indice = elemento.Color 
+        FillColor= colores[indice][0]
         if elemento.Generation == generation:
             draw.rectangle([(elemento.ZeroX + linea, elemento.ZeroY + linea), (elemento.EndX - linea, elemento.EndY - linea)], outline="#000000")
-            draw.text((elemento.ZeroX + linea + 1,elemento.ZeroY + linea),colores[elemento.Color][1],fill=FillColor)
+            draw.text((elemento.ZeroX + linea + 1,elemento.ZeroY + linea),colores[indice][1],fill=FillColor)
 
     name = name + ".png"
     img.save(name, "PNG")
@@ -129,6 +130,7 @@ def Inspiration(sequence, Iterations, width, height):
     # Creamos el resto de rectángulos
     i = 0
     while i < Iterations:
+        print("Iteration ", i )
         for elemento in array_of_cuadros:
             if elemento.Generation == i:
                 DivideRectangle(sequence, array_of_cuadros, elemento, width, height)
