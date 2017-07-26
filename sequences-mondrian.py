@@ -24,7 +24,7 @@ import sys, Image, ImageDraw
 
 class SubRectangle:
     """crea un rectángulo con coordenadas y color como subdivisión de un rectágulo padre"""
-    def __init__(self, orden, division, color, parent= None):
+    def __init__(self, orden, division, color, width, height, parent= None):
 
         self.Parent= parent
         self.Color= color
@@ -32,8 +32,8 @@ class SubRectangle:
         if parent is None:
             self.ZeroX= 0
             self.ZeroY= 0
-            self.EndX= WIDTH
-            self.EndY= HEIGHT
+            self.EndX= width
+            self.EndY= height
             self.VorH= "V"
             self.Generation= 0
 
@@ -73,15 +73,15 @@ class SubRectangle:
 
 
 
-def DivideRectangle(sequence, array_of_cuadros, parent):
+def DivideRectangle(sequence, array_of_cuadros, parent, width, height):
     """Toma los siguientes tres dígitos de Pi, y divide el cuadro en dos usando como proporción el primero de esos tres dígitos. Los otros dos digitos asignan el color de los cuadros """
  
     division= int(sequence.pop(0))
     color1= int(sequence.pop(0))
     color2= int(sequence.pop(0))
 
-    array_of_cuadros.append(SubRectangle(1,division,color1,parent))
-    array_of_cuadros.append(SubRectangle(2,division,color2,parent))
+    array_of_cuadros.append(SubRectangle(1,division,color1, width, height, parent))
+    array_of_cuadros.append(SubRectangle(2,division,color2, width, height, parent))
 
 
 def Division(corta,larga,division):
@@ -97,9 +97,7 @@ def Division(corta,larga,division):
     return resultado
 
 
-def PintaCuadro(array_of_cuadros, generation, name):
-
-    global WIDTH, HEIGHT, LINE
+def PintaCuadro(array_of_cuadros, generation, name, line_width):
 
     colores = [ ("#FFFFFF","blanco"),("#FFFFFF","blanco"),("#FFFFFF","blanco"),
                 ("#AA0000","rojo"),("#AA0000","rojo"),
@@ -107,8 +105,8 @@ def PintaCuadro(array_of_cuadros, generation, name):
                 ("#000000","negro"),("#000000","negro"),
                 ("#AAAA00","verde") ]
     
-    img = Image.new("RGB", (WIDTH, HEIGHT), "#ffffff")
-    linea = round(LINE/2.0)
+    img = Image.new("RGB", (width, height), "#ffffff")
+    linea = round(line_width/2.0)
     draw = ImageDraw.Draw(img)    
     for elemento in array_of_cuadros:
 
@@ -121,7 +119,7 @@ def PintaCuadro(array_of_cuadros, generation, name):
     img.save(name, "PNG")
 
 
-def Inspiration(sequence, Iterations):
+def Inspiration(sequence, Iterations, width, height):
 
 
     array_of_cuadros = []
@@ -133,38 +131,13 @@ def Inspiration(sequence, Iterations):
     while i < Iterations:
         for elemento in array_of_cuadros:
             if elemento.Generation == i:
-                DivideRectangle(sequence, array_of_cuadros, elemento)
+                DivideRectangle(sequence, array_of_cuadros, elemento, width, height)
         i = i + 1
 
     return array_of_cuadros
 
 
 
-## Programa principal
-
-iterations= 5
-
-WIDTH= 1200
-HEIGHT= 800
-
-LINE= 4
-
-
-TableauName= "PiPyMondrian"
-
-if len(sys.argv) > 1:
-    iterations = sys.argv[1]
-else:
-    iterations = 5
-
-Fichero = open("10000pi.txt")
-Cadena= Fichero.read()
-Fichero.close()
-
-PI = list(Cadena)
-
-array_of_cuadros = Inspiration(PI, iterations)
-PintaCuadro(array_of_cuadros,iterations,TableauName)
 
 
 
