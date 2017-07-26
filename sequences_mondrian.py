@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #coding: utf-8
 
 #       CopyRight 2013 Allan Psicobyte (psicobyte@gmail.com)
@@ -97,7 +96,7 @@ def Division(corta,larga,division):
     return resultado
 
 
-def PintaCuadro(array_of_cuadros, generation, name, line_width):
+def PintaCuadro(array_of_cuadros, generation, name, width,height,line_width):
 
     colores = [ ("#FFFFFF","blanco"),("#FFFFFF","blanco"),("#FFFFFF","blanco"),
                 ("#AA0000","rojo"),("#AA0000","rojo"),
@@ -124,7 +123,8 @@ def Inspiration(sequence, Iterations, width, height):
 
     array_of_cuadros = []
     # Creamos el rectángulo raiz
-    array_of_cuadros.append(SubRectangle(1,0,0))
+    base = SubRectangle(1, 0, 0, width, height)
+    array_of_cuadros.append(base)
 
     # Creamos el resto de rectángulos
     i = 0
