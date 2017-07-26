@@ -97,41 +97,26 @@ def Division(corta,larga,division):
     return resultado
 
 
-def PintaCuadro(array_of_cuadros, generation,name):
+def PintaCuadro(array_of_cuadros, generation, name):
 
     global WIDTH, HEIGHT, LINE
 
-    img = Image.new("RGB", (WIDTH, HEIGHT), "#000000")
-
-    draw = ImageDraw.Draw(img)
-
+    colores = [ ("#FFFFFF","blanco"),("#FFFFFF","blanco"),("#FFFFFF","blanco"),
+                ("#AA0000","rojo"),("#AA0000","rojo"),
+                ("#0000AA","azul"),("#0000AA","azul"),
+                ("#000000","negro"),("#000000","negro"),
+                ("#AAAA00","verde") ]
+    
+    img = Image.new("RGB", (WIDTH, HEIGHT), "#ffffff")
+    linea = round(LINE/2.0)
+    draw = ImageDraw.Draw(img)    
     for elemento in array_of_cuadros:
 
-        if elemento.Color == 0:
-            FillColor= "#FFFFFF"
-        if elemento.Color == 1:
-            FillColor= "#FFFFFF"
-        if elemento.Color == 2:
-            FillColor= "#FFFFFF"
-        if elemento.Color == 3:
-            FillColor= "#AA0000"
-        if elemento.Color == 4:
-            FillColor= "#AA0000"
-        if elemento.Color == 5:
-            FillColor= "#0000AA"
-        if elemento.Color == 6:
-            FillColor= "#0000AA"
-        if elemento.Color == 7:
-            FillColor= "#000000"
-        if elemento.Color == 8:
-            FillColor= "#000000"
-        if elemento.Color == 9:
-            FillColor= "#AAAA00"
-
-        linea= round(LINE / 2,0)
-
+        FillColor= colores[elemento.Color][0]
         if elemento.Generation == generation:
-            draw.rectangle([(elemento.ZeroX + linea, elemento.ZeroY + linea), (elemento.EndX - linea, elemento.EndY - linea)], outline="#000000", fill= FillColor)
+            draw.rectangle([(elemento.ZeroX + linea, elemento.ZeroY + linea), (elemento.EndX - linea, elemento.EndY - linea)], outline="#000000")
+            draw.text((elemento.ZeroX + linea + 1,elemento.ZeroY + linea),colores[elemento.Color][1],fill=FillColor)
+
     name = name + ".png"
     img.save(name, "PNG")
 
